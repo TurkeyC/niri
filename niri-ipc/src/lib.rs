@@ -119,6 +119,8 @@ pub enum Request {
     OverviewState,
     /// Request information about screencasts.
     Casts,
+    /// Request the current cursor position.
+    GetCursorPos,
 }
 
 /// Reply from niri to client.
@@ -165,6 +167,8 @@ pub enum Response {
     OverviewState(Overview),
     /// Information about screencasts.
     Casts(Vec<Cast>),
+    /// The current cursor position.
+    CursorPos(CursorPos),
 }
 
 /// Overview information.
@@ -173,6 +177,16 @@ pub enum Response {
 pub struct Overview {
     /// Whether the overview is currently open.
     pub is_open: bool,
+}
+
+/// Cursor position in logical coordinates.
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq)]
+#[cfg_attr(feature = "json-schema", derive(schemars::JsonSchema))]
+pub struct CursorPos {
+    /// Logical X coordinate.
+    pub x: f64,
+    /// Logical Y coordinate.
+    pub y: f64,
 }
 
 /// Color picked from the screen.

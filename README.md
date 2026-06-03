@@ -1,133 +1,129 @@
-<h1 align="center"><img alt="niri" src="https://github.com/user-attachments/assets/07d05cd0-d5dc-4a28-9a35-51bae8f119a0"></h1>
-<p align="center">A scrollable-tiling Wayland compositor.</p>
-<p align="center">
-    <a href="https://matrix.to/#/#niri:matrix.org"><img alt="Matrix" src="https://img.shields.io/badge/matrix-%23niri-blue?logo=matrix"></a>
-    <a href="https://github.com/niri-wm/niri/blob/main/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/niri-wm/niri"></a>
-    <a href="https://github.com/niri-wm/niri/releases"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/niri-wm/niri?logo=github"></a>
-</p>
+# niri（定制版）
 
 <p align="center">
-    <a href="https://niri-wm.github.io/niri/Getting-Started.html">Getting Started</a> | <a href="https://niri-wm.github.io/niri/Configuration%3A-Introduction.html">Configuration</a> | <a href="https://github.com/niri-wm/niri/discussions/325">Setup&nbsp;Showcase</a>
+    <em>基于 <a href="https://github.com/niri-wm/niri">niri</a> 26.4.0 的定制滚动平铺 Wayland 合成器</em>
 </p>
 
-<img width="1280" height="720" alt="niri with a few windows open" src="https://github.com/user-attachments/assets/dea5909e-1859-4aaa-9d88-d37f9663e00b" />
+## 与原版的差异
 
-## About
+本分支在原版 niri 基础上添加了以下功能：
 
-Windows are arranged in columns on an infinite strip going to the right.
-Opening a new window never causes existing windows to resize.
+### 新增：`GetCursorPos` IPC 命令
 
-Every monitor has its own separate window strip.
-Windows can never "overflow" onto an adjacent monitor.
+> 用于鼠标点击特效等需要实时获取光标位置的场景。
 
-Workspaces are dynamic and arranged vertically.
-Every monitor has an independent set of workspaces, and there's always one empty workspace present all the way down.
+- 新增 `niri msg get-cursor-pos` 命令，返回当前鼠标在逻辑坐标中的位置
+- 支持两种输出格式：
 
-The workspace arrangement is preserved across disconnecting and connecting monitors where it makes sense.
-When a monitor disconnects, its workspaces will move to another monitor, but upon reconnection they will move back to the original monitor.
+```bash
+niri msg get-cursor-pos            # 文本输出
+# → Cursor position: 1920.5, 1080.0
 
-## Features
+niri msg get-cursor-pos --json     # JSON 输出
+# → {"x":1920.5,"y":1080.0}
+```
 
-- Built from the ground up for scrollable tiling
-- [Dynamic workspaces](https://niri-wm.github.io/niri/Workspaces.html) like in GNOME
-- An [Overview](https://github.com/user-attachments/assets/379a5d1f-acdb-4c11-b36c-e85fd91f0995) that zooms out workspaces and windows
-- Built-in screenshot UI
-- Monitor and window screencasting through xdg-desktop-portal-gnome
-    - You can [block out](https://niri-wm.github.io/niri/Configuration%3A-Window-Rules.html#block-out-from) sensitive windows from screencasts
-    - [Dynamic cast target](https://niri-wm.github.io/niri/Screencasting.html#dynamic-screencast-target) that can change what it shows on the go
-- [Touchpad](https://github.com/niri-wm/niri/assets/1794388/946a910e-9bec-4cd1-a923-4a9421707515) and [mouse](https://github.com/niri-wm/niri/assets/1794388/8464e65d-4bf2-44fa-8c8e-5883355bd000) gestures
-- Group windows into [tabs](https://niri-wm.github.io/niri/Tabs.html)
-- Configurable layout: gaps, borders, struts, window sizes
-- [Gradient borders](https://niri-wm.github.io/niri/Configuration%3A-Layout.html#gradients) with Oklab and Oklch support
-- [Background blur](https://niri-wm.github.io/niri/Window-Effects.html) for windows and layer-shell surfaces
-- [Animations](https://github.com/niri-wm/niri/assets/1794388/ce178da2-af9e-4c51-876f-8709c241d95e) with support for [custom shaders](https://github.com/niri-wm/niri/assets/1794388/27a238d6-0a22-4692-b794-30dc7a626fad)
-- Live-reloading config
-- Works with [screen readers](https://niri-wm.github.io/niri/Accessibility.html)
+#### 实现说明
 
-## Video Demo
+- **IPC 类型层**（`niri-ipc` crate）：新增 `Request::GetCursorPos`、`Response::CursorPos(CursorPos)`、`CursorPos { x: f64, y: f64 }` 结构体
+- **CLI 层**（`src/cli.rs`）：新增 `Msg::GetCursorPos` 子命令
+- **客户端层**（`src/ipc/client.rs`）：消息映射 + 文本/JSON 双格式输出
+- **服务端层**（`src/ipc/server.rs`）：通过 `insert_idle` 模式在 compositor 事件循环中安全读取 `state.niri.seat.get_pointer().unwrap().current_location()`，返回 `Copy` 类型的坐标值，无借用冲突
 
-https://github.com/niri-wm/niri/assets/1794388/bce834b0-f205-434e-a027-b373495f9729
+---
 
-Also check out this video from Brodie Robertson that showcases a lot of the niri functionality: [Niri Is My New Favorite Wayland Compositor](https://youtu.be/DeYx2exm04M)
+## 构建与打包
 
-## Status
+### RPM 构建（Fedora）
 
-Niri is stable for day-to-day use and does most things expected of a Wayland compositor.
-Many people are daily-driving niri, and are happy to help in our [Matrix channel].
+本定制版已配置好 RPM 打包流程，可直接生成本地安装包。
 
-Give it a try!
-Follow the instructions on the [Getting Started](https://niri-wm.github.io/niri/Getting-Started.html) page.
-Grab a desktop shell like [DankMaterialShell] or [Noctalia] (or build a more traditional setup): niri by itself is not a complete desktop environment.
-Also check out [awesome-niri], a list of niri-related links and projects.
+#### 前置条件
 
-Here are some points you may have questions about:
+```bash
+sudo dnf install cargo-rpm-macros rpm-build rpmdevtools
+```
 
-- **Multi-monitor**: yes, a core part of the design from the very start. Mixed DPI works.
-- **Fractional scaling**: yes, plus all niri UI stays pixel-perfect.
-- **NVIDIA**: seems to work fine.
-- **Floating windows**: yes, starting from niri 25.01.
-- **Input devices**: niri supports tablets, touchpads, and touchscreens.
-You can map the tablet to a specific monitor, or use [OpenTabletDriver].
-We have touchpad gestures, but no touchscreen gestures yet.
-- **Wlr protocols**: yes, we have most of the important ones like layer-shell, gamma-control, screencopy.
-You can check on [wayland.app](https://wayland.app) at the bottom of each protocol's page.
-- **Performance**: while I run niri on beefy machines, I try to stay conscious of performance.
-I've seen someone use it fine on an Eee PC 900 from 2008, of all things.
-- **Xwayland**: [integrated](https://niri-wm.github.io/niri/Xwayland.html#using-xwayland-satellite) via xwayland-satellite starting from niri 25.08.
+#### 构建步骤
 
-## Media
+```bash
+# 1. 初始化 RPM 构建目录
+rpmdev-setuptree
 
-[niri: Making a Wayland compositor in Rust](https://youtu.be/Kmz8ODolnDg?list=PLRdS-n5seLRqrmWDQY4KDqtRMfIwU0U3T) · *December 2024*
+# 2. 从当前 git HEAD 创建源码压缩包
+git archive --prefix="niri-26.4.0/" \
+  -o ~/rpmbuild/SOURCES/niri-26.4.0.tar.gz HEAD
 
-My talk from the 2024 Moscow RustCon about niri, and how I do randomized property testing and profiling, and measure input latency.
-The talk is in Russian, but I prepared full English subtitles that you can find in YouTube's subtitle language selector.
+# 3. 构建 RPM（包含 SRPM 和二进制包）
+rpmbuild -ba --nocheck ~/rpmbuild/SPECS/niri.spec
+```
 
-[An interview with Ivan, the developer behind Niri](https://www.trommelspeicher.de/podcast/special_the_developer_behind_niri) · *June 2025*
+#### 产物
 
-An interview by a German tech podcast Das Triumvirat (in English).
-We talk about niri development and history, and my experience building and maintaining niri.
+| 文件 | 说明 |
+|---|---|
+| `~/rpmbuild/RPMS/x86_64/niri-26.4.0-*.fc43.x86_64.rpm` | 二进制 RPM（约 18 MB） |
+| `~/rpmbuild/SRPMS/niri-26.4.0-*.fc43.src.rpm` | 源码 RPM |
+| `~/rpmbuild/SPECS/niri.spec` | Spec 文件 |
 
-[A tour of the niri scrolling-tiling Wayland compositor](https://lwn.net/Articles/1025866/) · *July 2025*
+#### 安装
 
-An LWN article with a nice overview and introduction to niri.
+```bash
+sudo dnf install ~/rpmbuild/RPMS/x86_64/niri-26.4.0-*.fc43.x86_64.rpm
+```
 
-## Contributing
+#### Spec 特点
 
-If you'd like to help with niri, there are plenty of both coding- and non-coding-related ways to do so.
-See [CONTRIBUTING.md](https://github.com/niri-wm/niri/blob/main/CONTRIBUTING.md) for an overview.
+- 基于 Fedora 官方 spec 简化，**无需 vendored 依赖**，直接在线构建
+- RUSTFLAGS 保留完整 debuginfo 和 frame pointers（`-Cdebuginfo=2 -Ccodegen-units=1 -Cstrip=none -Cforce-frame-pointers=yes`），确保 panic 时给出完整回溯
+- 版本号包含 git commit SHA：`26.4.0-1.dev20260603git<shortcommit>`
+- panic 回溯验证：`niri panic` 可显示文件名和行号
 
-## Inspiration
+### 手动构建（不打包）
 
-Niri is heavily inspired by [PaperWM] which implements scrollable tiling on top of GNOME Shell.
+```bash
+cargo build --release
+```
 
-One of the reasons that prompted me to try writing my own compositor is being able to properly separate the monitors.
-Being a GNOME Shell extension, PaperWM has to work against Shell's global window coordinate space to prevent windows from overflowing.
+---
 
-## Tile Scrollably Elsewhere
+## 验证定制功能
 
-Here are some other projects which implement a similar workflow:
+安装后重启 niri，确认 `GetCursorPos` 命令可用：
 
-- [PaperWM]: scrollable tiling on top of GNOME Shell.
-- [karousel]: scrollable tiling on top of KDE.
-- [scroll](https://github.com/dawsers/scroll) and [papersway]: scrollable tiling on top of sway/i3.
-- Hyprland has a built-in [scrolling layout](https://wiki.hypr.land/Configuring/Scrolling-Layout/).
-- [Paneru] and [PaperWM.spoon]: scrollable tiling on top of macOS.
+```bash
+# 检查版本
+niri --version
+# → niri 26.04 (8ed0da44d974c32c6877d2f4630c314da0717ecb)
 
-## Contact
+# 测试光标位置查询
+niri msg get-cursor-pos
+```
 
-Our main communication channel is a Matrix chat, feel free to join and ask a question: https://matrix.to/#/#niri:matrix.org
+---
 
-We also have a community Discord server: https://discord.gg/vT8Sfjy7sx
+## 原始项目说明
 
-[PaperWM]: https://github.com/paperwm/PaperWM
-[waybar]: https://github.com/Alexays/Waybar
-[fuzzel]: https://codeberg.org/dnkl/fuzzel
-[awesome-niri]: https://github.com/niri-wm/awesome-niri
-[karousel]: https://github.com/peterfajdiga/karousel
-[papersway]: https://spwhitton.name/tech/code/papersway/
-[Paneru]: https://github.com/karinushka/paneru
-[PaperWM.spoon]: https://github.com/mogenson/PaperWM.spoon
-[Matrix channel]: https://matrix.to/#/#niri:matrix.org
-[OpenTabletDriver]: https://opentabletdriver.net/
-[DankMaterialShell]: https://danklinux.com/
-[Noctalia]: https://noctalia.dev/
+Niri 是一个滚动平铺 Wayland 合成器。窗口排列在无限向右延伸的列中，打开新窗口不会导致现有窗口调整大小。每个显示器拥有独立的窗口条和动态工作区。
+
+更多信息请访问：[niri-wm/niri](https://github.com/niri-wm/niri)
+
+### 功能特性
+
+- 原生滚动平铺
+- 动态工作区（类似 GNOME）
+- 概览（Overview）模式
+- 内置截图 UI
+- 通过 xdg-desktop-portal-gnome 进行窗口/显示器屏幕捕获
+- 触摸板和鼠标手势
+- 标签页分组
+- 可配置布局：间距、边框、窗口尺寸
+- 渐变边框（支持 Oklab / Oklch）
+- 窗口和 layer-shell 背景模糊
+- 动画（支持自定义着色器）
+- 配置热重载
+- 屏幕阅读器支持
+
+### 许可
+
+GPL-3.0-or-later

@@ -49,6 +49,7 @@ pub fn handle_msg(mut msg: Msg, json: bool) -> anyhow::Result<()> {
         Msg::RequestError => Request::ReturnError,
         Msg::OverviewState => Request::OverviewState,
         Msg::Casts => Request::Casts,
+        Msg::GetCursorPos => Request::GetCursorPos,
     };
 
     let mut socket = Socket::connect().context("error connecting to the niri socket")?;
@@ -527,6 +528,19 @@ pub fn handle_msg(mut msg: Msg, json: bool) -> anyhow::Result<()> {
             } else {
                 println!("Overview is closed.");
             }
+        }
+        Msg::GetCursorPos => {
+            let Response::CursorPos(pos) = response else {
+                bail!("unexpected response: expected CursorPos, got {response:?}");
+            };
+
+            if json {
+                let pos = serde_json::to_string(&pos).context("error formatting response")?;
+                println!("{pos}");
+                return Ok(());
+            }
+
+            println!("Cursor position: {}, {}", pos.x, pos.y);
         }
         Msg::Casts => {
             let Response::Casts(mut casts) = response else {

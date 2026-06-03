@@ -109,6 +109,8 @@ pub enum Msg {
     OverviewState,
     /// List screencasts.
     Casts,
+    /// Get the current cursor position.
+    GetCursorPos,
 }
 
 #[derive(Clone, Debug, clap::ValueEnum)]
