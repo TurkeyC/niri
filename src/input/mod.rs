@@ -1,4 +1,4 @@
-use std::any::Any;
+use std::any::{Any, TypeId};
 use std::cmp::min;
 use std::collections::hash_map::Entry;
 use std::collections::HashSet;
@@ -50,6 +50,7 @@ use crate::dbus::freedesktop_a11y::KbMonBlock;
 use crate::layout::scrolling::ScrollDirection;
 use crate::layout::{ActivateWindow, LayoutElement as _};
 use crate::niri::{CastTarget, PointerVisibility, State};
+use crate::protocols::virtual_pointer::VirtualPointerInputBackend;
 use crate::ui::mru::{WindowMru, WindowMruUi};
 use crate::ui::screenshot_ui::ScreenshotUi;
 use crate::utils::spawning::{spawn, spawn_sh};
@@ -2635,7 +2636,7 @@ impl State {
         self.niri.queue_redraw_all();
     }
 
-    fn on_pointer_motion_absolute<I: InputBackend>(
+    fn on_pointer_motion_absolute<I: InputBackend + 'static>(
         &mut self,
         event: I::PointerMotionAbsoluteEvent,
     ) {
@@ -2678,7 +2679,13 @@ impl State {
             }
         }
 
-        let under = self.niri.contents_under(pos);
+        // Virtual pointer events should skip the Overlay layer so they
+        // reach the window below (used by baspark click-through overlay).
+        let under = if TypeId::of::<I>() == TypeId::of::<VirtualPointerInputBackend>() {
+            self.niri.contents_under_skip_overlay(pos)
+        } else {
+            self.niri.contents_under(pos)
+        };
 
         self.niri.handle_focus_follows_mouse(&under);
 

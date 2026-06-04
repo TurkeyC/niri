@@ -8,6 +8,13 @@
 
 本分支在原版 niri 基础上添加了以下功能：
 
+### 新增：虚拟指针跳过 Overlay 层
+
+> 用于 baspark 等点击穿透浮层场景，让虚拟指针事件透过 Overlay 层到达下方窗口。
+
+- 虚拟指针（`VirtualPointerInputBackend`）的 `on_pointer_motion_absolute` 事件使用 `contents_under_skip_overlay()` 判定焦点的目标
+- 新增 `Niri::contents_under_skip_overlay()`：与 `contents_under()` 逻辑相同，但跳过 `Layer::Overlay` 层
+
 ### 新增：`GetCursorPos` IPC 命令
 
 > 用于鼠标点击特效等需要实时获取光标位置的场景。

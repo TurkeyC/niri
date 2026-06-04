@@ -1,3 +1,19 @@
+## virtual pointer overlay skip
+
+Virtual pointer events (e.g. from baspark click-through overlays) now skip the `Overlay` wlr-layer-shell layer so they reach the window below.
+
+### Modified files
+
+**src/input/mod.rs**
+- Added `VirtualPointerInputBackend` import
+- `on_pointer_motion_absolute`: added `'static` bound on `I` to enable `TypeId` dispatch
+- Virtual pointer inputs use `contents_under_skip_overlay` instead of `contents_under` to bypass overlay layer surfaces
+
+**src/niri.rs**
+- Added `contents_under_skip_overlay()` — identical to `contents_under()` but omits the `Layer::Overlay` layer check, letting input pass through to layers below
+
+---
+
 ## added `GetCursorPos` IPC command
 
 A new IPC command `GetCursorPos` is added to query the current mouse cursor position in logical coordinates.

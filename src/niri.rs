@@ -3457,6 +3457,177 @@ impl Niri {
         rv
     }
 
+    /// Like `contents_under`, but skips wlr-layer-shell surfaces on the
+    /// Overlay layer.  Used for virtual pointer events so they reach the
+    /// window below an overlay (e.g. baspark click-through).
+    pub fn contents_under_skip_overlay(&self, pos: Point<f64, Logical>) -> PointContents {
+        let mut rv = PointContents::default();
+
+        let Some((output, pos_within_output)) = self.output_under(pos) else {
+            return rv;
+        };
+        rv.output = Some(output.clone());
+        let output_pos_in_global_space = self.global_space.output_geometry(output).unwrap().loc;
+
+        if self.exit_confirm_dialog.is_open() {
+            return rv;
+        } else if self.is_locked() {
+            let Some(state) = self.output_state.get(output) else {
+                return rv;
+            };
+            let Some(surface) = state.lock_surface.as_ref() else {
+                return rv;
+            };
+
+            rv.surface = under_from_surface_tree(
+                surface.wl_surface(),
+                pos_within_output,
+                (0, 0),
+                WindowSurfaceType::ALL,
+            )
+            .map(|(surface, pos_within_output)| {
+                (
+                    surface,
+                    (pos_within_output + output_pos_in_global_space).to_f64(),
+                )
+            });
+
+            return rv;
+        }
+
+        if self.screenshot_ui.is_open() || self.window_mru_ui.is_open() {
+            return rv;
+        }
+
+        let layers = layer_map_for_output(output);
+        let layer_surface_under = |layer, popup| {
+            layers
+                .layers_on(layer)
+                .rev()
+                .find_map(|layer_surface| {
+                    let mapped = self.mapped_layer_surfaces.get(layer_surface)?;
+                    if mapped.place_within_backdrop() {
+                        return None;
+                    }
+
+                    let mut layer_pos_within_output =
+                        layers.layer_geometry(layer_surface).unwrap().loc.to_f64();
+                    layer_pos_within_output += mapped.bob_offset();
+
+                    if matches!(layer, Layer::Background | Layer::Bottom) {
+                        let mon = self.layout.monitor_for_output(output)?;
+                        let (_, geo) = mon.workspace_under(pos_within_output)?;
+                        layer_pos_within_output += geo.loc;
+                    }
+
+                    let surface_type = if popup {
+                        WindowSurfaceType::POPUP
+                    } else {
+                        WindowSurfaceType::TOPLEVEL
+                    } | WindowSurfaceType::SUBSURFACE;
+
+                    layer_surface
+                        .surface_under(pos_within_output - layer_pos_within_output, surface_type)
+                        .map(|(surface, pos_within_layer)| {
+                            (
+                                (surface, pos_within_layer.to_f64() + layer_pos_within_output),
+                                layer_surface,
+                            )
+                        })
+                })
+                .map(|(s, l)| (Some(s), (None, Some(l.clone()))))
+        };
+
+        let layer_toplevel_under = |layer| layer_surface_under(layer, false);
+        let layer_popup_under = |layer| layer_surface_under(layer, true);
+
+        let mapped_hit_data = |(mapped, hit): (&Mapped, HitType)| {
+            let window = &mapped.window;
+            let surface_and_pos = if let HitType::Input { win_pos } = hit {
+                let win_pos_within_output = win_pos;
+                window
+                    .surface_under(
+                        pos_within_output - win_pos_within_output,
+                        WindowSurfaceType::ALL,
+                    )
+                    .map(|(s, pos_within_window)| {
+                        (s, pos_within_window.to_f64() + win_pos_within_output)
+                    })
+            } else {
+                None
+            };
+            (surface_and_pos, (Some((window.clone(), hit)), None))
+        };
+
+        let interactive_moved_window_under = || {
+            self.layout
+                .interactive_moved_window_under(output, pos_within_output)
+                .map(mapped_hit_data)
+        };
+        let window_under = || {
+            self.layout
+                .window_under(output, pos_within_output)
+                .map(mapped_hit_data)
+        };
+
+        let mon = self.layout.monitor_for_output(output).unwrap();
+
+        // ── key difference: skip Overlay layer ──
+        let mut under = None;
+
+        let is_overview_open = self.layout.is_overview_open();
+
+        if mon.render_above_top_layer() {
+            under = under
+                .or_else(interactive_moved_window_under)
+                .or_else(window_under)
+                .or_else(|| layer_popup_under(Layer::Top))
+                .or_else(|| layer_toplevel_under(Layer::Top))
+                .or_else(|| layer_popup_under(Layer::Bottom))
+                .or_else(|| layer_popup_under(Layer::Background))
+                .or_else(|| layer_toplevel_under(Layer::Bottom))
+                .or_else(|| layer_toplevel_under(Layer::Background));
+        } else {
+            if self.is_inside_hot_corner(output, pos_within_output) {
+                rv.hot_corner = true;
+                return rv;
+            }
+
+            under = under
+                .or_else(|| layer_popup_under(Layer::Top))
+                .or_else(|| layer_toplevel_under(Layer::Top));
+
+            under = under.or_else(interactive_moved_window_under);
+
+            if !is_overview_open {
+                under = under
+                    .or_else(|| layer_popup_under(Layer::Bottom))
+                    .or_else(|| layer_popup_under(Layer::Background));
+            }
+
+            under = under.or_else(window_under);
+
+            if !is_overview_open {
+                under = under
+                    .or_else(|| layer_toplevel_under(Layer::Bottom))
+                    .or_else(|| layer_toplevel_under(Layer::Background));
+            }
+        }
+
+        let Some((mut surface_and_pos, (window, layer))) = under else {
+            return rv;
+        };
+
+        if let Some((_, surface_pos)) = &mut surface_and_pos {
+            *surface_pos += output_pos_in_global_space.to_f64();
+        }
+
+        rv.surface = surface_and_pos;
+        rv.window = window;
+        rv.layer = layer;
+        rv
+    }
+
     pub fn output_under_cursor(&self) -> Option<Output> {
         let pos = self.seat.get_pointer().unwrap().current_location();
         self.global_space.output_under(pos).next().cloned()
