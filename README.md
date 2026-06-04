@@ -101,7 +101,7 @@ cargo build --release
 ```bash
 # 检查版本
 niri --version
-# → niri 26.04 (8ed0da44d974c32c6877d2f4630c314da0717ecb)
+# → niri 26.04 (5ee47e5d)
 
 # 测试光标位置查询
 niri msg get-cursor-pos

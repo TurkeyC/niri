@@ -7,7 +7,7 @@
 # Source: GitHub commit archive (self-contained, no vendored deps needed)
 
 %global srcver 26.4.0
-%global commit ba338463
+%global commit 56a5b700
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 # Keep debuginfo in binary for panic backtraces.
@@ -110,5 +110,9 @@ install -Dm644 -t %{buildroot}%{_userunitdir} ./resources/niri-shutdown.target
 %{_userunitdir}/niri-shutdown.target
 
 %changelog
-* Wed Jun 03 2026 TurkeyC <caoturkey@example.com> - 26.4.0-1.dev%{shortcommit}
+* Thu Jun 04 2026 TurkeyC <caoturkey@example.com> - 26.4.0-1.dev%{shortcommit}
+- virtual pointer: skip Overlay layer for click-through support
+- Custom build adding GetCursorPos IPC command
+
+* Wed Jun 03 2026 TurkeyC <caoturkey@example.com> - 26.4.0-1.devba33846
 - Custom build adding GetCursorPos IPC command

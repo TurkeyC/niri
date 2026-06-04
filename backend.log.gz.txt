@@ -1,0 +1,279 @@
+[2026-06-03 12:50:33,126][  INFO][PID:1565087] Marking build as starting
+[2026-06-03 12:50:33,208][  INFO][PID:1565087] Checking that https://download.copr.fedorainfracloud.org/results/caoturkey/niri/fedora-43-x86_64//repodata/repomd.xml exists
+[2026-06-03 12:50:34,289][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:50:34,352][  INFO][PID:1565087] rpmeta: predicted 13 min for niri on fedora-43-x86_64 -> normal builder sufficient
+[2026-06-03 12:50:34,358][  INFO][PID:1565087] VM allocation process starts
+[2026-06-03 12:50:34,376][  INFO][PID:1565087] Trying to allocate VM: ResallocHost, ticket_id=3240245, requested_tags=['arch_x86_64', 'copr_builder']
+[2026-06-03 12:50:39,380][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:50:44,388][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:50:49,389][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:50:54,391][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:50:59,393][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:04,395][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:09,396][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:14,397][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:19,399][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:24,401][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:29,403][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:34,405][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:39,410][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:44,412][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:49,415][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:54,417][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:51:59,420][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:04,421][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:09,425][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:14,427][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:19,431][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:24,434][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:29,435][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:34,437][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:39,438][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:44,440][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:49,442][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:54,444][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:52:59,448][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:04,450][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:09,454][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:14,455][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:19,460][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:24,468][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:29,473][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:34,476][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:39,487][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:44,490][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:49,494][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:54,496][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:53:59,497][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:04,499][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:09,501][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:14,505][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:19,508][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:24,513][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:29,515][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:34,516][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:39,518][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:44,520][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:49,524][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:54,533][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:54:59,536][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:04,538][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:09,539][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:14,541][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:19,542][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:24,546][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:29,550][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:34,553][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:39,560][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:44,565][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:49,567][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:54,569][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:55:59,571][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:04,577][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:09,579][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:14,583][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:19,585][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:24,590][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:29,594][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:34,599][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:39,602][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:44,604][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:49,605][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:54,607][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:56:59,609][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:04,611][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:09,613][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:14,614][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:19,617][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:24,619][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:29,622][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:34,624][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:39,625][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:44,629][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:49,633][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:52,538][  INFO][PID:1565087] Allocated host ResallocHost, ticket_id=3240245, hostname=54.86.103.14, name=aws_x86_64_reserved_prod_10489482_20260603_125527, requested_tags=['arch_x86_64', 'copr_builder']
+[2026-06-03 12:57:52,539][  INFO][PID:1565087] Allocating ssh connection to builder
+[2026-06-03 12:57:52,540][  INFO][PID:1565087] Checking that builder machine is OK
+[2026-06-03 12:57:52,917][  INFO][PID:1565087] Installed copr-rpmbuild version: 1.8
+[2026-06-03 12:57:52,918][  INFO][PID:1565087] Running remote command: copr-builder-ready fedora-43-x86_64
+[2026-06-03 12:57:53,162][  INFO][PID:1565087] Red Hat subscription not needed for fedora-43-x86_64
+Builder is ready to be used
+
+[2026-06-03 12:57:53,165][  INFO][PID:1565087] Filling build.info file with builder info
+[2026-06-03 12:57:53,167][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:57:53,169][  INFO][PID:1565087] Sending build state back to frontend: {
+    "builds": [
+        {
+            "timeout": 18000,
+            "frontend_base_url": "https://copr.fedorainfracloud.org",
+            "memory_reqs": 2048,
+            "enable_net": true,
+            "project_owner": "caoturkey",
+            "project_name": "niri",
+            "project_dirname": "niri",
+            "submitter": "caoturkey",
+            "ended_on": null,
+            "started_on": 1780491473.1696286,
+            "submitted_on": null,
+            "status": 3,
+            "chroot": "fedora-43-x86_64",
+            "arch": "x86_64",
+            "buildroot_pkgs": [],
+            "task_id": "10553412-fedora-43-x86_64",
+            "build_id": 10553412,
+            "package_name": "niri",
+            "package_version": "26.4.0-1.devba33846",
+            "git_repo": "https://copr-dist-git.fedorainfracloud.org/git/caoturkey/niri/niri",
+            "git_hash": "1090920d502a0a810c50a7eb089be908a2df4e4a",
+            "git_branch": null,
+            "source_type": null,
+            "source_json": null,
+            "pkg_name": null,
+            "pkg_main_version": null,
+            "pkg_epoch": null,
+            "pkg_release": null,
+            "srpm_url": null,
+            "uses_devel_repo": false,
+            "sandbox": "caoturkey/niri--caoturkey",
+            "results": null,
+            "appstream": false,
+            "allow_user_ssh": false,
+            "ssh_public_keys": null,
+            "storage": 1,
+            "repos": [
+                {
+                    "baseurl": "https://download.copr.fedorainfracloud.org/results/caoturkey/niri/fedora-43-x86_64/",
+                    "id": "copr_base",
+                    "name": "Copr repository",
+                    "priority": null
+                }
+            ],
+            "background": false,
+            "fedora_review": false,
+            "isolation": "default",
+            "repo_priority": null,
+            "tags": [
+                "arch_x86_64"
+            ],
+            "with_opts": [],
+            "without_opts": [],
+            "destdir": "/var/lib/copr/public_html/results/caoturkey/niri",
+            "results_repo_url": "https://download.copr.fedorainfracloud.org/results/caoturkey/niri",
+            "result_dir": "10553412-niri",
+            "built_packages": "",
+            "rpmeta_prediction": 13,
+            "id": 10553412,
+            "mockchain_macros": {
+                "copr_username": "caoturkey",
+                "copr_projectname": "niri",
+                "vendor": "Fedora Project COPR (caoturkey/niri)"
+            }
+        }
+    ]
+}
+[2026-06-03 12:57:53,246][  INFO][PID:1565087] Sending fedora-messaging bus message in build.start
+[2026-06-03 12:57:53,956][  INFO][PID:1565087] Sending fedora-messaging bus message in chroot.start
+[2026-06-03 12:57:53,993][  INFO][PID:1565087] Starting remote build: copr-rpmbuild --verbose --drop-resultdir --task-url https://copr.fedorainfracloud.org/backend/get-build-task/10553412-fedora-43-x86_64 --chroot fedora-43-x86_64 --detached
+[2026-06-03 12:57:54,534][  INFO][PID:1565087] The copr-rpmbuild seems started, per:
+stdout: 
+stderr: Warning: Permanently added '54.86.103.14' (ED25519) to the list of known hosts.
+
+
+[2026-06-03 12:57:54,535][  INFO][PID:1565087] Downloading the builder-live.log file, attempt 1
+[2026-06-03 12:57:54,541][  INFO][PID:1565087] Popen command started: ssh -F /home/copr/.ssh/config mockbuilder@54.86.103.14 copr-rpmbuild-log
+[2026-06-03 12:57:59,544][  INFO][PID:1565087] Periodic builder liveness probe: alive
+[2026-06-03 12:57:59,545][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:58:04,547][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:58:09,553][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:58:14,554][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:58:19,558][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:58:24,560][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:58:29,565][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:58:34,567][  INFO][PID:1565087] Checking for cancel request
+[2026-06-03 12:58:37,528][  INFO][PID:1565087] Downloading results from builder
+[2026-06-03 12:58:37,529][  INFO][PID:1565087] rsyncing of mockbuilder@54.86.103.14:/var/lib/copr-rpmbuild/results/ to /var/lib/copr/public_html/results/caoturkey/niri/fedora-43-x86_64/10553412-niri started
+[2026-06-03 12:58:37,532][  INFO][PID:1565087] Popen command started: /usr/bin/rsync -rltDvH --chmod=D755,F644 -e 'ssh -F /home/copr/.ssh/config' mockbuilder@54.86.103.14:/var/lib/copr-rpmbuild/results/ /var/lib/copr/public_html/results/caoturkey/niri/fedora-43-x86_64/10553412-niri/ &> /var/lib/copr/public_html/results/caoturkey/niri/fedora-43-x86_64/10553412-niri/build-10553412.rsync.log
+[2026-06-03 12:58:37,806][  INFO][PID:1565087] rsyncing finished.
+[2026-06-03 12:58:37,809][  INFO][PID:1565087] VM Release request
+[2026-06-03 12:58:37,828][  INFO][PID:1565087] Searching for 'success' file in resultdir
+[2026-06-03 12:58:37,830][ ERROR][PID:1565087] Build failed: Backend process error: No success file => build failure
+[2026-06-03 12:58:37,858][  INFO][PID:1565087] Finished build: id=10553412 failed=True timeout=18000 destdir=/var/lib/copr/public_html/results/caoturkey/niri chroot=fedora-43-x86_64 
+[2026-06-03 12:58:37,866][ ERROR][PID:1565087] Backend process error: No success file => build failure
+[2026-06-03 12:58:37,889][  INFO][PID:1565087] Worker failed build, took 44.71988797187805
+[2026-06-03 12:58:37,890][  INFO][PID:1565087] Sending build state back to frontend: {
+    "builds": [
+        {
+            "timeout": 18000,
+            "frontend_base_url": "https://copr.fedorainfracloud.org",
+            "memory_reqs": 2048,
+            "enable_net": true,
+            "project_owner": "caoturkey",
+            "project_name": "niri",
+            "project_dirname": "niri",
+            "submitter": "caoturkey",
+            "ended_on": 1780491517.8895166,
+            "started_on": 1780491473.1696286,
+            "submitted_on": null,
+            "status": 0,
+            "chroot": "fedora-43-x86_64",
+            "arch": "x86_64",
+            "buildroot_pkgs": [],
+            "task_id": "10553412-fedora-43-x86_64",
+            "build_id": 10553412,
+            "package_name": "niri",
+            "package_version": "26.4.0-1.devba33846",
+            "git_repo": "https://copr-dist-git.fedorainfracloud.org/git/caoturkey/niri/niri",
+            "git_hash": "1090920d502a0a810c50a7eb089be908a2df4e4a",
+            "git_branch": null,
+            "source_type": null,
+            "source_json": null,
+            "pkg_name": null,
+            "pkg_main_version": null,
+            "pkg_epoch": null,
+            "pkg_release": null,
+            "srpm_url": null,
+            "uses_devel_repo": false,
+            "sandbox": "caoturkey/niri--caoturkey",
+            "results": null,
+            "appstream": false,
+            "allow_user_ssh": false,
+            "ssh_public_keys": null,
+            "storage": 1,
+            "repos": [
+                {
+                    "baseurl": "https://download.copr.fedorainfracloud.org/results/caoturkey/niri/fedora-43-x86_64/",
+                    "id": "copr_base",
+                    "name": "Copr repository",
+                    "priority": null
+                }
+            ],
+            "background": false,
+            "fedora_review": false,
+            "isolation": "default",
+            "repo_priority": null,
+            "tags": [
+                "arch_x86_64"
+            ],
+            "with_opts": [],
+            "without_opts": [],
+            "destdir": "/var/lib/copr/public_html/results/caoturkey/niri",
+            "results_repo_url": "https://download.copr.fedorainfracloud.org/results/caoturkey/niri",
+            "result_dir": "10553412-niri",
+            "built_packages": "",
+            "rpmeta_prediction": 13,
+            "id": 10553412,
+            "mockchain_macros": {
+                "copr_username": "caoturkey",
+                "copr_projectname": "niri",
+                "vendor": "Fedora Project COPR (caoturkey/niri)"
+            }
+        }
+    ]
+}
+[2026-06-03 12:58:37,945][  INFO][PID:1565087] Sending fedora-messaging bus message in build.end
+[2026-06-03 12:58:38,011][  INFO][PID:1565087] Compressing /var/lib/copr/public_html/results/caoturkey/niri/fedora-43-x86_64/10553412-niri/builder-live.log by gzip
+[2026-06-03 12:58:38,014][  INFO][PID:1565087] Running command 'gzip /var/lib/copr/public_html/results/caoturkey/niri/fedora-43-x86_64/10553412-niri/builder-live.log' as PID 1633931
+[2026-06-03 12:58:38,048][  INFO][PID:1565087] Finished after 0 seconds with exit code 0 (gzip /var/lib/copr/public_html/results/caoturkey/niri/fedora-43-x86_64/10553412-niri/builder-live.log)
+[2026-06-03 12:58:38,052][  INFO][PID:1565087] Compressing /var/lib/copr/public_html/results/caoturkey/niri/fedora-43-x86_64/10553412-niri/backend.log by gzip
+[2026-06-03 12:58:38,056][  INFO][PID:1565087] Running command 'gzip /var/lib/copr/public_html/results/caoturkey/niri/fedora-43-x86_64/10553412-niri/backend.log' as PID 1633936
+
