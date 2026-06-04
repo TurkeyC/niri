@@ -84,7 +84,10 @@ CARGO_EOF
 %build
 # Limit to 1 job to stay within COPR's 2 GB memory limit (niri is large
 # and parallel rustc invocations quickly exhaust available RAM).
-%cargo_build -j1
+%{__cargo} build \
+  -Z avoid-dev-deps \
+  --profile rpm \
+  -j1
 
 %install
 %cargo_install
