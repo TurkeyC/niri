@@ -14,7 +14,8 @@
 %global debug_package %{nil}
 %global __strip /bin/true
 
-# Work around cargo-rpm-macros forcing its own debuginfo flags.
+# Work around cargo-rpm-macros forcing its own debuginfo flags — we
+# override RUSTFLAGS in %%build so this value never reaches rustc.
 %global rustflags_debuginfo please-remove-me
 
 Name:           niri
@@ -74,17 +75,13 @@ sed -i '/^\[net\]/,/^\[/{/^\[net\]/d; /^\[/!d;}' .cargo/config.toml
 sed -i '/^\[source\.local-registry\]/,/^\[/{/^\[source\.local-registry\]/d; /^\[/!d;}' .cargo/config.toml
 sed -i '/^replace-with/d' .cargo/config.toml
 
-# Clean up the "please-remove-me" debuginfo marker line.
-if [ -f .cargo/config.toml ]; then
-  sed -i 's/.*please-remove-me$//' .cargo/config.toml
-else
-  sed -i 's/.*please-remove-me$//' .cargo/config
-fi
-
 # Inject the commit hash so niri --version shows it.
 sed -i 's/\[env\]/[env]\nNIRI_BUILD_COMMIT="%{commit}"/' .cargo/config.toml
 
 %build
+# Override RUSTFLAGS to clear cargo-rpm-macros' debuginfo injection and
+# keep full debuginfo for panic backtraces.
+export RUSTFLAGS="-Cdebuginfo=2 -Ccodegen-units=1 -Cstrip=none -Cforce-frame-pointers=yes"
 %cargo_build
 
 %install
