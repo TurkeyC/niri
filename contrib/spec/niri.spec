@@ -82,7 +82,9 @@ NIRI_BUILD_COMMIT = "%{commit}"
 CARGO_EOF
 
 %build
-%cargo_build
+# Limit to 1 job to stay within COPR's 2 GB memory limit (niri is large
+# and parallel rustc invocations quickly exhaust available RAM).
+%cargo_build -j1
 
 %install
 %cargo_install
