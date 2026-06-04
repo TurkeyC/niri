@@ -13,10 +13,7 @@
 # Keep debuginfo in binary for panic backtraces.
 %global debug_package %{nil}
 %global __strip /bin/true
-
-# Work around cargo-rpm-macros forcing its own debuginfo flags — we
-# override RUSTFLAGS in %%build so this value never reaches rustc.
-%global rustflags_debuginfo please-remove-me
+%global rustflags_debuginfo 2
 
 Name:           niri
 Version:        %{srcver}
@@ -79,9 +76,6 @@ sed -i '/^replace-with/d' .cargo/config.toml
 sed -i 's/\[env\]/[env]\nNIRI_BUILD_COMMIT="%{commit}"/' .cargo/config.toml
 
 %build
-# Override RUSTFLAGS to clear cargo-rpm-macros' debuginfo injection and
-# keep full debuginfo for panic backtraces.
-export RUSTFLAGS="-Cdebuginfo=2 -Ccodegen-units=1 -Cstrip=none -Cforce-frame-pointers=yes"
 %cargo_build
 
 %install
