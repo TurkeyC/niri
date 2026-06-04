@@ -66,14 +66,20 @@ Based on niri %{srcver} <https://github.com/niri-wm/niri>.
 
 %cargo_prep
 
-# Remove the offline-mode / local-registry sections inserted by %%cargo_prep
-# so cargo can fetch smithay (git) and other crates from the network.
-sed -i '/^\[net\]/,/^\[/{/^\[net\]/d; /^\[/!d;}' .cargo/config.toml
-sed -i '/^\[source\.local-registry\]/,/^\[/{/^\[source\.local-registry\]/d; /^\[/!d;}' .cargo/config.toml
-sed -i '/^replace-with/d' .cargo/config.toml
+# Regenerate .cargo/config.toml: %%cargo_prep inserts offline/local-registry
+# sections that prevent fetching from crates.io.  We want a minimal config
+# with just the rpm profile and commit env.
+cat > .cargo/config.toml << 'CARGO_EOF'
+[profile.rpm]
+inherits = "release"
+debug = %{rustflags_debuginfo}
+codegen-units = 1
+strip = "none"
+lto = "fat"
 
-# Inject the commit hash so niri --version shows it.
-sed -i 's/\[env\]/[env]\nNIRI_BUILD_COMMIT="%{commit}"/' .cargo/config.toml
+[env]
+NIRI_BUILD_COMMIT = "%{commit}"
+CARGO_EOF
 
 %build
 %cargo_build
