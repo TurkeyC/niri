@@ -87,7 +87,7 @@ CARGO_EOF
 %{__cargo} build \
   -Z avoid-dev-deps \
   --profile rpm \
-  -j1
+  -j2
 
 %install
 %cargo_install
