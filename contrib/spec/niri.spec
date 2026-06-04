@@ -7,8 +7,8 @@
 # Source: GitHub commit archive (self-contained, no vendored deps needed)
 
 %global srcver 26.4.0
-%global commit 56a5b700
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global commit 56a5b700077de9924d61a99bffca36d83d98b417
+%global shortcommit %(c=%{commit}; echo ${c:0:8})
 
 # Keep debuginfo in binary for panic backtraces.
 %global debug_package %{nil}
